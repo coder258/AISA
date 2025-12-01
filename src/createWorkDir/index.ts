@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-21 16:37:33
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-11-21 16:55:14
+ * @LastEditTime: 2025-12-01 17:18:47
  * @FilePath: \AISA\src\createWorkDir\index.ts
  * @Description: 创建工作目录，用于存放临时文件。
  *
@@ -15,7 +15,7 @@ import { join } from "path";
 export const createWorkDir = async (): Promise<string> => {
   try {
     // 在项目根目录创建work目录
-    const baseDir = join(import.meta.url, "../..", "work");
+    const baseDir = join(process.cwd(), "work");
     const workDir = join(baseDir, nanoid());
     // 检查目录是否已存在
     try {

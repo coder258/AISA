@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-28 10:38:15
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-11-28 17:15:51
+ * @LastEditTime: 2025-12-01 17:32:57
  * @FilePath: \AISA\src\getAIRepairSuggestions\index.ts
  * @Description: 调用ai模型接口，分析审计结果，给出修复建议
  *
@@ -14,7 +14,7 @@ const BASE_URL = "https://dashscope.aliyuncs.com/compatible-mode/v1";
 
 // 配置OpenAI客户端，指向阿里云百炼的兼容端点
 const client = new OpenAI({
-  apiKey: process.env.API_KEY, // 从环境变量读取API密钥
+  apiKey: process.env.OPENAI_API_KEY, // 从环境变量读取API密钥
   baseURL: BASE_URL, // 阿里云兼容接口地址[citation:6][citation:9]
 });
 
@@ -31,7 +31,7 @@ export const analyzeAuditResultWithAI = async (
       {
         role: "system",
         content:
-          "你作为一个专业的前端开发工程师，现在用户给你提供一段很大的JSON数据，代表了一个前端项目的依赖包的安全审计结果，请你仔细阅读并分析，给出合理、清晰的修复建议，给出的修复建议应该简明、直达重点，并在建议的结尾提示用户谨慎操作，AI建议仅供参考。",
+          "你作为一个专业的前端开发工程师，现在用户给你提供一段很大的JSON数据，代表了一个前端项目的依赖包的安全审计结果，请你仔细阅读并分析，给出合理、清晰的修复建议，给出的修复建议应该简明、直达重点，并在建议的结尾换行，提示用户谨慎操作，AI建议仅供参考。",
       },
       {
         role: "user",

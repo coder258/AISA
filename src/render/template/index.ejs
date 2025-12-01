@@ -1,0 +1,22 @@
+<!--
+ * @Author: 唐宇
+ * @Date: 2025-12-01 15:47:10
+ * @LastEditors: 唐宇
+ * @LastEditTime: 2025-12-01 17:26:10
+ * @FilePath: \AISA\src\render\template\index.ejs
+ * @Description: 
+ * 
+ * Copyright (c) 2025 by 唐宇, All Rights Reserved. 
+-->
+# `<%- packageJson.name %>`审计结果
+
+<% if(audit.summary.total) { %>
+<%- include('./audit.ejs'); %>
+<% } %>
+<% if(audit.summary.total === 0) { %>
+你项目的所有直接依赖和间接依赖都没有发现任何风险漏洞。
+<% } %>
+
+# AI建议
+
+<%- suggestion %>
