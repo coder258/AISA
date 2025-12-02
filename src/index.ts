@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-20 17:08:57
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-01 17:31:23
+ * @LastEditTime: 2025-12-02 15:22:39
  * @FilePath: \AISA\src\index.ts
  * @Description: 入口文件
  *
@@ -16,24 +16,29 @@ import { parseProject } from "./parseProject/index.js";
 import { render } from "./render/index.js";
 import { writeFile } from "fs/promises";
 
+/**
+ * @description: 根据传入的项目路径，审计该项目，输出规范化的审计结果并给出修复建议，审计结果为md格式
+ * @param {string} projectRoot：需要审计的项目路径，可以是本地路径，也可以是远程仓库的URL
+ * @param {string} path：保存审计结果的路径
+ * @return {*}
+ */
 const auditProject = async (projectRoot: string, path: string) => {
   // 1.创建临时工作目录
   const workDir = await createWorkDir();
   // 2.根据项目路径，解析项目，在工作目录添加package.json文件
-  const packageJson = parseProject(projectRoot);
+  const packageJson = await parseProject(projectRoot);
   // 3.生成package-lock.json
   await generateLock(workDir, packageJson);
   // 4.对工作目录的package-lock.json进行审计
   const auditResult = await audit(workDir, packageJson);
-  console.log("auditResult", auditResult);
-  // // 5.调用AI模型接口对审计结果进行分析，并给出修复建议
-  // const suggestion = await analyzeAuditResultWithAI(auditResult);
-  // // 6.渲染审计结果和修复建议
-  // const renderedResult = await render(auditResult, suggestion, packageJson);
-  // // 7.删除工作目录
-  // await deleteWorkDir(workDir);
-  // // 8.将渲染结果写入到指定路径
-  // await writeFile(path, renderedResult);
+  // 5.调用AI模型接口对审计结果进行分析，并给出修复建议
+  const suggestion = await analyzeAuditResultWithAI(auditResult);
+  // 6.渲染审计结果和修复建议
+  const renderedResult = await render(auditResult, suggestion, packageJson);
+  // 7.删除工作目录
+  await deleteWorkDir(workDir);
+  // 8.将渲染结果写入到指定路径
+  await writeFile(path, renderedResult);
 };
 
 // auditProject(
@@ -44,8 +49,8 @@ const auditProject = async (projectRoot: string, path: string) => {
 // });
 
 auditProject(
-  `https://github.com/webpack/webpack-dev-server/tree/v4.9.3`,
-  `D:/myData/code/myProjects/react/webpack-dev-server_4_9_3.md`
+  `https://github.com/axios/axios/tree/v0.x`,
+  `D:/myData/code/myProjects/react/axios.md`
 ).then(() => {
   console.log("远程工程审计完成");
 });

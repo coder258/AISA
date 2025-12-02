@@ -13,8 +13,8 @@ export const runCommand = async (cmd: string, cwd: string) => {
 
     return stdout.stdout.toString();
   } catch (error) {
-    if (error && typeof error === "object" && "stderr" in error) {
-      return (error as ExecException).stderr!.toString();
+    if (error && typeof error === "object" && "stdout" in error) {
+      return (error as ExecException).stdout!.toString();
     }
     throw error;
   }

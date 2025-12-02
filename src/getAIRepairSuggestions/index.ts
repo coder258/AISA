@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-28 10:38:15
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-01 17:32:57
+ * @LastEditTime: 2025-12-02 15:15:33
  * @FilePath: \AISA\src\getAIRepairSuggestions\index.ts
  * @Description: 调用ai模型接口，分析审计结果，给出修复建议
  *
@@ -31,7 +31,7 @@ export const analyzeAuditResultWithAI = async (
       {
         role: "system",
         content:
-          "你作为一个专业的前端开发工程师，现在用户给你提供一段很大的JSON数据，代表了一个前端项目的依赖包的安全审计结果，请你仔细阅读并分析，给出合理、清晰的修复建议，给出的修复建议应该简明、直达重点，并在建议的结尾换行，提示用户谨慎操作，AI建议仅供参考。",
+          "你作为一个专业的前端开发工程师，现在用户给你提供一段很大的JSON数据，代表了一个前端项目的依赖包的安全审计结果，请你仔细阅读并分析，给出合理、清晰的修复建议，给出的修复建议应该简明、直达重点。",
       },
       {
         role: "user",
@@ -46,7 +46,7 @@ export const analyzeAuditResultWithAI = async (
       model: "qwen-turbo", // 指定使用通义千问Turbo模型，可根据需要更换为其他型号如qwen-plus[citation:9]
       messages: messages,
       temperature: 0.3, // 控制回复的随机性，0-1之间，值越高回答越多样
-      max_tokens: 1000, // 限制回复的最大长度
+      max_tokens: 2000, // 限制回复的最大长度
     });
 
     // 输出AI的回复
