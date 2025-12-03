@@ -21,7 +21,24 @@
 <% if(chain.length === 1 && chain[0] === packageJson.name) { %>
 当前工程
 <% } else { %>
-- `<%- packageJson.name %>` / <%- chain.map(c=>`\`${c}\``).join(' / ') %>
+```mermaid
+flowchart LR
+<%
+    let lines = [];
+
+    let formattedChain = chain.map((c) => {
+        let nodeId = c.replace(/[^a-zA-Z0-9]/g, '_');
+        let nodeName = c === packageJson.name ? "当前工程" : c;
+        lines.push(`    ${nodeId}["${nodeName}"]`);
+        return nodeId;
+    });
+
+    for (let i = 0; i < formattedChain.length - 1; i++) {
+        lines.push(`    ${formattedChain[i]} --> ${formattedChain[i + 1]}`);
+    }
+%>
+<%- lines.join('\n') %>
+```
 <% } %>
   <% }); %>
   <% } %>

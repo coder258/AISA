@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-20 17:08:57
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-02 15:22:39
+ * @LastEditTime: 2025-12-03 12:18:25
  * @FilePath: \AISA\src\index.ts
  * @Description: 入口文件
  *

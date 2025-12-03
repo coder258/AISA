@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-26 16:54:53
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-01 17:23:06
+ * @LastEditTime: 2025-12-03 11:01:09
  * @FilePath: \AISA\src\audit\index.ts
  * @Description: 获取项目的规范化审计结果
  *
@@ -57,7 +57,6 @@ export const audit = async (
 ): Promise<AuditResultType> => {
   // 获取npm audit的原始审计结果
   const auditResult = await npmAudit(workDir);
-  console.log("原始审计结果", auditResult);
   // 解析并规范化处理审计结果
   const normalizedAuditResult = normalizeAuditResult(auditResult);
   // 获取当前工程的审计结果
