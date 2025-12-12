@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-12-01 15:50:05
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-04 17:19:24
+ * @LastEditTime: 2025-12-12 15:36:41
  * @FilePath: \AISA\src\render\markdown.ts
  * @Description: 渲染markdown
  *
@@ -24,6 +24,7 @@ export const renderMarkdown = (data: any): Promise<any> => {
         reject(err);
         return;
       } else {
+        console.log("渲染审计结果完成");
         resolve(str);
       }
     });

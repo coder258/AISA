@@ -6,7 +6,14 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config --loader ts-node/esm src/index.ts"
+    "dev": "node -r dotenv/config --loader ts-node/esm src/index.ts",
+    "type-check": "tsc --noEmit",
+    "build:ts": "tsc",
+    "build:assets": "copyfiles -u 1 src/**/*.ejs src/**/*.json dist/",
+    "build": "npm run build:ts && npm run build:assets",
+    "clean": "rimraf dist",
+    "prebuild": "npm run clean",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +21,8 @@
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/node": "^24.10.1",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^6.1.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
@@ -24,5 +33,8 @@
     "nanoid": "^5.1.6",
     "openai": "^6.9.1",
     "zod": "^3.25.76"
+  },
+  "bin": {
+    "audit": "./bin/cli.js"
   }
 }

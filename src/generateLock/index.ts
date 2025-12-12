@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-26 15:45:41
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-11-26 16:09:04
+ * @LastEditTime: 2025-12-12 15:31:44
  * @FilePath: \AISA\src\generateLock\index.ts
  * @Description: 写入package.json到工作目录，并生成package-lock.json。
  *
@@ -57,4 +57,5 @@ export const generateLock = async (
   await writePackageJson(workDir, packageJson);
   // 2.在工作目录生成package-lock.json
   await generateLockFile(workDir);
+  console.log("生成package-lock.json成功");
 };

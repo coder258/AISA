@@ -2,8 +2,8 @@
  * @Author: 唐宇
  * @Date: 2025-11-21 17:00:26
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-11-25 17:21:38
- * @FilePath: \AISA\src\parseProject\utils\parseRemoteProject.ts
+ * @LastEditTime: 2025-12-12 15:29:42
+ * @FilePath: \AISA\src\parseProject\parseRemoteProject.ts
  * @Description: 解析远程项目，获取package.json等息
  *
  * Copyright (c) 2025 by 唐宇, All Rights Reserved.
@@ -17,24 +17,27 @@ type GithubInfoType = {
 const isFrontendProject = (packageJson: Record<string, any>): boolean => {
   // 检查常见前端项目特征
   const hasFrontendDependencies = [
-    'react',
-    'vue',
-    'angular',
-    'svelte',
-    'webpack',
-    'rollup',
-    'vite',
-    'parcel',
-    'create-react-app',
-    '@vue/cli'
-  ].some(keyword => 
-    packageJson.dependencies?.[keyword] || 
-    packageJson.devDependencies?.[keyword] ||
-    packageJson.keywords?.includes(keyword)
+    "react",
+    "vue",
+    "angular",
+    "svelte",
+    "webpack",
+    "rollup",
+    "vite",
+    "parcel",
+    "create-react-app",
+    "@vue/cli",
+  ].some(
+    (keyword) =>
+      packageJson.dependencies?.[keyword] ||
+      packageJson.devDependencies?.[keyword] ||
+      packageJson.keywords?.includes(keyword)
   );
 
-  const hasScripts = packageJson.scripts && Object.keys(packageJson.scripts).length > 0;
-  const hasMainFile = packageJson.main || packageJson.module || packageJson.browser;
+  const hasScripts =
+    packageJson.scripts && Object.keys(packageJson.scripts).length > 0;
+  const hasMainFile =
+    packageJson.main || packageJson.module || packageJson.browser;
 
   return hasFrontendDependencies || (hasScripts && !hasMainFile);
 };
@@ -94,7 +97,9 @@ const getRemotePackageJson = async (githubInfo: GithubInfoType) => {
       if (res.status === 404) {
         throw new Error("Package.json file not found in the project");
       }
-      throw new Error(`Failed to fetch package.json: ${res.status} ${res.statusText}`);
+      throw new Error(
+        `Failed to fetch package.json: ${res.status} ${res.statusText}`
+      );
     }
     return res.json() as Promise<Record<string, any>>;
   });
@@ -104,16 +109,20 @@ export const parseRemoteProject = async (remoteUrl: string) => {
   try {
     const githubInfo = getGithubInfoByRemoteUrl(remoteUrl);
     const packageJson = await getRemotePackageJson(githubInfo);
-    
+
     if (!isFrontendProject(packageJson)) {
       throw new Error("This project is not a frontend project");
     }
-    
+
+    console.log("解析远程工程成功");
+
     return packageJson;
   } catch (error) {
     if (error instanceof Error) {
       if (error.message.includes("Package.json file not found")) {
-        throw new Error("Failed to get package.json: The project does not contain a package.json file");
+        throw new Error(
+          "Failed to get package.json: The project does not contain a package.json file"
+        );
       }
       throw error;
     }

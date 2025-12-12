@@ -4,23 +4,26 @@
     // File Layout
     "rootDir": "./src",
     "outDir": "./dist",
-
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "esnext",
-    "lib": ["esnext"],
-    "types": ["node"],
-
+    "lib": [
+      "esnext"
+    ],
+    "types": [
+      "node"
+    ],
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true, // 可选：生成.d.ts类型声明文件
+    "declarationDir": "./dist/types",
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
-
     // Style Options
     // "noImplicitReturns": true,
     // "noImplicitOverride": true,
@@ -28,7 +31,6 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
-
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
@@ -36,6 +38,14 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*", // 编译src目录
+    "bin/**/*" // 关键：确保bin/cli.js也被编译！
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

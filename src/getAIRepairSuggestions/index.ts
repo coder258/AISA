@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-28 10:38:15
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-02 15:15:33
+ * @LastEditTime: 2025-12-12 15:35:45
  * @FilePath: \AISA\src\getAIRepairSuggestions\index.ts
  * @Description: 调用ai模型接口，分析审计结果，给出修复建议
  *
@@ -50,8 +50,9 @@ export const analyzeAuditResultWithAI = async (
     });
 
     // 输出AI的回复
-    console.log("通义千问分析结果:");
-    console.log(completion.choices[0]!.message.content);
+    console.log("获取AI修复建议成功");
+    // console.log("通义千问分析结果:");
+    // console.log(completion.choices[0]!.message.content);
 
     return completion.choices[0]!.message.content;
   } catch (error) {

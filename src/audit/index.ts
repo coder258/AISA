@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-26 16:54:53
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-03 11:01:09
+ * @LastEditTime: 2025-12-12 15:34:21
  * @FilePath: \AISA\src\audit\index.ts
  * @Description: 获取项目的规范化审计结果
  *
@@ -80,6 +80,8 @@ export const audit = async (
     moderate: normalizedAuditResult.vulnerabilities.moderate.length,
     low: normalizedAuditResult.vulnerabilities.low.length,
   };
+
+  console.log("解析并处理工程审计结果完成");
 
   return normalizedAuditResult as AuditResultType;
 };

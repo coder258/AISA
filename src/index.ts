@@ -2,13 +2,14 @@
  * @Author: 唐宇
  * @Date: 2025-11-20 17:08:57
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-03 12:18:25
+ * @LastEditTime: 2025-12-12 15:45:38
  * @FilePath: \AISA\src\index.ts
  * @Description: 入口文件
  *
  * Copyright (c) 2025 by 唐宇, All Rights Reserved.
  */
 import { audit } from "./audit/index.js";
+import { checkCache, writeCache } from "./cache/index.js";
 import { createWorkDir, deleteWorkDir } from "./createWorkDir/index.js";
 import { generateLock } from "./generateLock/index.js";
 import { analyzeAuditResultWithAI } from "./getAIRepairSuggestions/index.js";
@@ -22,35 +23,59 @@ import { writeFile } from "fs/promises";
  * @param {string} path：保存审计结果的路径
  * @return {*}
  */
-const auditProject = async (projectRoot: string, path: string) => {
+export const auditProject = async (projectRoot: string, path: string) => {
   // 1.创建临时工作目录
   const workDir = await createWorkDir();
   // 2.根据项目路径，解析项目，在工作目录添加package.json文件
   const packageJson = await parseProject(projectRoot);
-  // 3.生成package-lock.json
+  // 3.缓存预检
+  await checkCache(packageJson, workDir);
+  // 4.生成package-lock.json
   await generateLock(workDir, packageJson);
-  // 4.对工作目录的package-lock.json进行审计
+  // 5.对工作目录的package-lock.json进行审计
   const auditResult = await audit(workDir, packageJson);
-  // 5.调用AI模型接口对审计结果进行分析，并给出修复建议
+  // 6.调用AI模型接口对审计结果进行分析，并给出修复建议
   const suggestion = await analyzeAuditResultWithAI(auditResult);
-  // 6.渲染审计结果和修复建议
+  // 7.渲染审计结果和修复建议
   const renderedResult = await render(auditResult, suggestion, packageJson);
-  // 7.删除工作目录
+  // 8.删除工作目录
   await deleteWorkDir(workDir);
-  // 8.将渲染结果写入到指定路径
+  // 9.将渲染结果写入到指定路径
   await writeFile(path, renderedResult);
+  // 10.缓存审计结果
+  await writeCache(packageJson, path);
+
+  return path;
 };
 
 // auditProject(
 //   `D:/myData/code/myProjects/react/survey-frontend`,
 //   `D:/myData/code/myProjects/react/survey-frontend/survey-frontend.md`
-// ).then(() => {
-//   console.log("本地工程审计完成");
-// });
+// )
+//   .then((res) => {
+//     console.log(`本地工程审计完成，审计结果已保存到：${res}`);
+//   })
+//   .catch((error) => {
+//     const { msg, auditResultUrl } = error;
+//     if (msg === "缓存预检成功") {
+//       console.log(`本地工程审计完成，审计结果已保存到：${auditResultUrl}`);
+//     } else {
+//       console.error("本地工程审计失败：", error);
+//     }
+//   });
 
 auditProject(
   `https://github.com/axios/axios/tree/v0.x`,
   `D:/myData/code/myProjects/react/axios.md`
-).then(() => {
-  console.log("远程工程审计完成");
-});
+)
+  .then((res) => {
+    console.log(`远程工程审计完成，审计结果已保存到：${res}`);
+  })
+  .catch((error) => {
+    const { msg, auditResultUrl } = error;
+    if (msg === "缓存预检成功") {
+      console.log(`远程工程审计完成，审计结果已保存到：${auditResultUrl}`);
+    } else {
+      console.error("远程工程审计失败：", error);
+    }
+  });

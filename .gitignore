@@ -13,6 +13,15 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# cache
+/cache
+
+# bin
+/bin
+
+# npmignore
+.npmignore
+
 # OS
 .DS_Store
 
