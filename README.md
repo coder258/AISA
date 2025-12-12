@@ -1,13 +1,13 @@
-# AISA - 智能依赖审计系统
+# AISA - 前端智能依赖安全审计系统
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-4.5-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 ## 项目概述
 
-AISA (Advanced Intelligent Security Auditor) 是一个基于 TypeScript 的智能依赖审计工具，专注于：
+AISA (Advanced Intelligent Security Auditor) 是一个基于 TypeScript 的前端智能依赖安全审计工具，专注于：
 
-- 自动检测项目依赖中的安全漏洞
+- 自动检测前端项目依赖中的安全漏洞
 - 生成详细的 Markdown 格式审计报告
 - 智能缓存审计结果提升性能
 - 提供 AI 驱动的修复建议
@@ -74,7 +74,7 @@ npm run dev
 
 ## 项目背景
 
-本项目旨在解决项目开源依赖安全审计的痛点，提供高效、智能的依赖安全管理解决方案。
+本项目旨在解决前端项目开源依赖安全审计的痛点，提供高效、智能的依赖安全管理解决方案。
 
 ## 技术栈
 
