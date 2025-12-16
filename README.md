@@ -46,10 +46,21 @@ npm install
 
 ## 使用说明
 
+**目前版本若要使用AI修复建议，请自行前往[阿里云百炼平台](https://www.aliyun.com/)创建API key，并参照.env.example进行设置，如不使用，则需在主函数屏蔽此流程，并在渲染函数传入空字符串即可**
+
+---
+
 ### 基本审计
 
 ```bash
 npm run dev
+```
+
+### 或
+
+```bash
+# 此方式暂不支持AI修复建议
+npx aisa projectRoot path
 ```
 
 ### 入口文件参数说明
@@ -80,5 +91,6 @@ npm run dev
 
 - TypeScript
 - Node.js
+- MCP
 - EJS
 - 其他: 详见`package.json`

@@ -8,12 +8,8 @@
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "esnext",
-    "lib": [
-      "esnext"
-    ],
-    "types": [
-      "node"
-    ],
+    "lib": ["esnext"],
+    "types": ["node"],
     "moduleResolution": "NodeNext",
     "esModuleInterop": true, // 可选：生成.d.ts类型声明文件
     "declarationDir": "./dist/types",
@@ -44,8 +40,5 @@
     "src/**/*", // 编译src目录
     "bin/**/*" // 关键：确保bin/cli.js也被编译！
   ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "exclude": ["node_modules", "dist"]
 }

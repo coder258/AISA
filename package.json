@@ -1,6 +1,6 @@
 {
   "name": "aisa",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
   "type": "module",
@@ -17,7 +17,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/ejs": "^3.1.5",
     "@types/node": "^24.10.1",
