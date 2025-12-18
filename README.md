@@ -11,6 +11,7 @@ AISA (Advanced Intelligent Security Auditor) 是一个基于 TypeScript 的前�
 - 生成详细的 Markdown 格式审计报告
 - 智能缓存审计结果提升性能
 - 提供 AI 驱动的修复建议
+- 支持MCP协议与AI Agent集成
 
 ## 核心特性
 
@@ -28,6 +29,9 @@ AISA (Advanced Intelligent Security Auditor) 是一个基于 TypeScript 的前�
 
 3. **AI 修复建议**
    - 基于安全漏洞自动生成修复建议
+
+4. **MCP 集成**
+   - 支持MCP协议，可集成到其他客户端，如AI Agent
 
 ## 安装指南
 
