@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-11-20 17:08:57
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-18 15:28:38
+ * @LastEditTime: 2025-12-19 17:00:43
  * @FilePath: \AISA\src\index.ts
  * @Description: 入口文件
  *
@@ -64,18 +64,18 @@ export const auditProject = async (projectRoot: string, path: string) => {
 //     }
 //   });
 
-auditProject(
-  `https://github.com/axios/axios/tree/v0.x`,
-  `D:/myData/code/myProjects/react/axios.md`
-)
-  .then((res) => {
-    console.log(`远程工程审计完成，审计结果已保存到：${res}`);
-  })
-  .catch((error) => {
-    const { msg, auditResultUrl } = error;
-    if (msg === "缓存预检成功") {
-      console.log(`远程工程审计完成，审计结果已保存到：${auditResultUrl}`);
-    } else {
-      console.error("远程工程审计失败：", error);
-    }
-  });
+// auditProject(
+//   `https://github.com/axios/axios/tree/v0.x`,
+//   `D:/myData/code/myProjects/react/axios.md`
+// )
+//   .then((res) => {
+//     console.log(`远程工程审计完成，审计结果已保存到：${res}`);
+//   })
+//   .catch((error) => {
+//     const { msg, auditResultUrl } = error;
+//     if (msg === "缓存预检成功") {
+//       console.log(`远程工程审计完成，审计结果已保存到：${auditResultUrl}`);
+//     } else {
+//       console.error("远程工程审计失败：", error);
+//     }
+//   });

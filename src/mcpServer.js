@@ -1,7 +1,10 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import z from "zod";
-import { auditProject } from "../dist/index.js";
+import { exec } from "child_process";
+import { promisify } from "util";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 const server = new McpServer({
   name: "audit-server",
@@ -27,6 +30,31 @@ server.registerTool(
     },
   },
   async ({ projectRoot, savePath }) => {
+    const runCommand = async (cmd, cwd) => {
+      if (!cmd) return;
+      if (!cmd.startsWith("npm")) return;
+      try {
+        const stdout = await promisify(exec)(cmd, {
+          cwd,
+          encoding: "utf-8",
+          // stdio: ["ignore", "pipe", "pipe"],
+        });
+        return stdout.stdout.toString();
+      } catch (error) {
+        if (error && typeof error === "object" && "stdout" in error) {
+          return error.stdout.toString();
+        }
+        throw error;
+      }
+    };
+
+    await runCommand(
+      "npm run build",
+      join(dirname(fileURLToPath(import.meta.url))),
+      "../"
+    );
+    const { auditProject } = await import("../dist/index.js");
+
     await auditProject(projectRoot, savePath);
     return {
       content: [

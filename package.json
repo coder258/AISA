@@ -9,11 +9,12 @@
     "dev": "node -r dotenv/config --loader ts-node/esm src/index.ts",
     "type-check": "tsc --noEmit",
     "build:ts": "tsc",
+    "build:tsup": "tsup",
     "build:assets": "copyfiles -u 1 src/**/*.ejs src/**/*.json dist/",
-    "build": "npm run build:ts && npm run build:assets",
+    "build": "npm run build:tsup && npm run build:assets",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "start": "node dist/index.js"
+    "start": "node -r dotenv/config dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,7 @@
     "copyfiles": "^2.4.1",
     "rimraf": "^6.1.2",
     "ts-node": "^10.9.2",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
   "dependencies": {
