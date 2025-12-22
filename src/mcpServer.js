@@ -30,40 +30,63 @@ server.registerTool(
     },
   },
   async ({ projectRoot, savePath }) => {
-    const runCommand = async (cmd, cwd) => {
-      if (!cmd) return;
-      if (!cmd.startsWith("npm")) return;
-      try {
-        const stdout = await promisify(exec)(cmd, {
-          cwd,
-          encoding: "utf-8",
-          // stdio: ["ignore", "pipe", "pipe"],
-        });
-        return stdout.stdout.toString();
-      } catch (error) {
-        if (error && typeof error === "object" && "stdout" in error) {
-          return error.stdout.toString();
+    try {
+      const runCommand = async (cmd, cwd) => {
+        if (!cmd) return;
+        if (!cmd.startsWith("npm")) return;
+        try {
+          const stdout = await promisify(exec)(cmd, {
+            cwd,
+            encoding: "utf-8",
+            // stdio: ["ignore", "pipe", "pipe"],
+          });
+          return stdout.stdout.toString();
+        } catch (error) {
+          if (error && typeof error === "object" && "stdout" in error) {
+            return error.stdout.toString();
+          }
+          throw error;
         }
-        throw error;
+      };
+
+      await runCommand(
+        "npm run build",
+        join(dirname(fileURLToPath(import.meta.url))),
+        "../"
+      );
+      const { auditProject } = await import("../dist/index.js");
+
+      await auditProject(projectRoot, savePath);
+      return {
+        content: [
+          {
+            type: "text",
+            text: `审计完成，结果已保存到: ${savePath}`,
+          },
+        ],
+      };
+    } catch (error) {
+      const { msg, auditResultUrl } = error;
+      if (msg === "缓存预检成功") {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `缓存预检成功，审计已完成，审计结果位于: ${auditResultUrl}`,
+            },
+          ],
+        };
+      } else {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `调用MCP审计工具失败，错误信息：${JSON.stringify(error)}`,
+            },
+          ],
+        };
       }
-    };
-
-    await runCommand(
-      "npm run build",
-      join(dirname(fileURLToPath(import.meta.url))),
-      "../"
-    );
-    const { auditProject } = await import("../dist/index.js");
-
-    await auditProject(projectRoot, savePath);
-    return {
-      content: [
-        {
-          type: "text",
-          text: `审计完成，结果已保存到: ${savePath}`,
-        },
-      ],
-    };
+    }
   }
 );
 
