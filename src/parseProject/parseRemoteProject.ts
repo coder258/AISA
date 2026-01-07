@@ -2,44 +2,18 @@
  * @Author: 唐宇
  * @Date: 2025-11-21 17:00:26
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-12 15:29:42
+ * @LastEditTime: 2026-01-07 10:45:44
  * @FilePath: \AISA\src\parseProject\parseRemoteProject.ts
  * @Description: 解析远程项目，获取package.json等息
  *
  * Copyright (c) 2025 by 唐宇, All Rights Reserved.
  */
+import { isFrontendProject } from "./isFrontendProject.js";
+
 type GithubInfoType = {
   owner: string;
   repo: string;
   path: string;
-};
-
-const isFrontendProject = (packageJson: Record<string, any>): boolean => {
-  // 检查常见前端项目特征
-  const hasFrontendDependencies = [
-    "react",
-    "vue",
-    "angular",
-    "svelte",
-    "webpack",
-    "rollup",
-    "vite",
-    "parcel",
-    "create-react-app",
-    "@vue/cli",
-  ].some(
-    (keyword) =>
-      packageJson.dependencies?.[keyword] ||
-      packageJson.devDependencies?.[keyword] ||
-      packageJson.keywords?.includes(keyword)
-  );
-
-  const hasScripts =
-    packageJson.scripts && Object.keys(packageJson.scripts).length > 0;
-  const hasMainFile =
-    packageJson.main || packageJson.module || packageJson.browser;
-
-  return hasFrontendDependencies || (hasScripts && !hasMainFile);
 };
 
 const getGithubInfoByRemoteUrl = (remoteUrl: string): GithubInfoType => {

@@ -66,8 +66,8 @@ server.registerTool(
         ],
       };
     } catch (error) {
-      const { msg, auditResultUrl } = error;
-      if (msg === "缓存预检成功") {
+      const { message, auditResultUrl } = error;
+      if (message === "缓存预检成功") {
         return {
           content: [
             {

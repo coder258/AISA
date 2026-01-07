@@ -2,7 +2,7 @@
  * @Author: 唐宇
  * @Date: 2025-12-11 15:39:30
  * @LastEditors: 唐宇
- * @LastEditTime: 2025-12-16 10:25:46
+ * @LastEditTime: 2026-01-07 12:15:25
  * @FilePath: \AISA\src\cache\index.ts
  * @Description: 审计结果缓存
  *
@@ -80,7 +80,7 @@ export const checkCache = async (packageJson: any, workDir: string) => {
   console.log("缓存预检成功，审计结果已保存到：", auditResultUrl);
 
   throw {
-    msg: "缓存预检成功",
+    message: "缓存预检成功",
     auditResultUrl,
   };
 };
