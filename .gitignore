@@ -19,8 +19,9 @@ lerna-debug.log*
 # bin
 /bin
 
-# npmignore
+# npm
 .npmignore
+.npmrc
 
 # OS
 .DS_Store

@@ -1,6 +1,6 @@
 {
   "name": "aisa",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
   "type": "module",
@@ -14,7 +14,8 @@
     "build": "npm run build:tsup && npm run build:assets",
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
-    "start": "node -r dotenv/config dist/index.js"
+    "start": "node -r dotenv/config dist/index.js",
+    "pb": "npm version patch && npm publish"
   },
   "keywords": [],
   "author": "",
